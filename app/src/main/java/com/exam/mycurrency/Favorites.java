@@ -1,4 +1,4 @@
-package com.example.mycurrency;
+package com.exam.mycurrency;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

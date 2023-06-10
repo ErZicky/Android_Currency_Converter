@@ -1,4 +1,4 @@
-package com.example.mycurrency;
+package com.exam.mycurrency;
 
 import org.junit.Test;
 

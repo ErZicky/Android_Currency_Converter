@@ -1,6 +1,4 @@
-package com.example.mycurrency;
-
-import java.lang.annotation.Target;
+package com.exam.mycurrency;
 
 public class SavedCurrencies {
 
