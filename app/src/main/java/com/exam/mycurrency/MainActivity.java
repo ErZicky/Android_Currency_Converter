@@ -310,7 +310,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     // Ottieni il valore numerico della valuta
                     double currencyValue = dataObject.get(currencyCode).getAsDouble();
 
-                    // Moltiplica il valore per 15
+                    // Moltiplica il valore la quantità immessa
                     double multipliedValue = currencyValue * Double.parseDouble(Inputcurrency.getText().toString());
 
                     // Formatta il risultato a due cifre decimali
