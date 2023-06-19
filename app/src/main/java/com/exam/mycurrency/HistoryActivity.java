@@ -46,6 +46,7 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
+            
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView
                 .setOnNavigationItemSelectedListener(this);
@@ -57,13 +58,13 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
         Hview = (TextView) findViewById(R.id.Htext);
         Hview.setMovementMethod(new ScrollingMovementMethod());
 
-        LoadSymbols();
+        LoadSymbols(); //carico le abbreviazione delle valute
 
 
-        HButton.setOnClickListener(new View.OnClickListener() {
+        HButton.setOnClickListener(new View.OnClickListener() { //il bottone per mostrare la storia del conversion rate viene cliccato
             public void onClick(View v) {
                 Hview.setText("");
-                loadConRateHistory();
+                loadConRateHistory(); //carico il rateo di conversione degli ultimi 7 giorni per le valute selezionate
 
 
             }
@@ -85,6 +86,7 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
                 OkHttpClient client = new OkHttpClient();
 
 
+                // creo i calendar per la data odierna e per 7 giorni prima
                 Calendar calendar = Calendar.getInstance();
                 calendar.add(Calendar.DAY_OF_YEAR, -7);
 
@@ -98,6 +100,7 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
                 String date2 = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(calendar2.getTime());
                 Log.d("responsemsg", date2);
 
+                //creo la richiesta http
                 Request request = new Request.Builder()
                         .url("https://api.freecurrencyapi.com/v1/historical?apikey=ImLoHfOLkWEiYm3MnUhary5wlxaMZHSqQ7YKCZMD&currencies="+EndCurrency.getSelectedItem().toString()+"&base_currency="+ StartCurrency.getSelectedItem().toString() +"&date_from="+date+"&date_to" +date2)
                    //     .addHeader("apikey", "YraibCBIybmjk59VIH2J05DJpkULhQ24")
@@ -116,10 +119,11 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
             }
 
             @Override
-            protected void onPostExecute(String result) {
+            protected void onPostExecute(String result) { //elaboro il risultato
                 if (result != null) {
                     Log.d("resultSymH", result);
                     try {
+                        //provo ad estrarre i dati dal Json ritornato dalla chiamata
                         JSONObject dataJson = new JSONObject(result);
                         JSONObject data = dataJson.getJSONObject("data");
 
@@ -132,14 +136,14 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
                             String currencyCode = currencyObject.keys().next();
                             double exchangeRate = currencyObject.getDouble(currencyCode);
 
-                            String resultString = "Data: " + date + "\n" + "   Tasso di cambio: " + exchangeRate + "\n";
+                            String resultString = "Data: " + date + "\n" + "   Tasso di cambio: " + exchangeRate + "\n"; //creo la stringa da printare per ogni riga/data
                             resultBuilder.append(resultString);
                             Log.d("resultSym", resultString);
                         }
 
                         String resultText = resultBuilder.toString();
 
-                        Hview.setText(resultText);
+                        Hview.setText(resultText); //printo la stringa formata da tutte le stringhe create per gli utlimi 7 giorni
 
                     } catch (Exception e) {
                         Log.d("errore in risposta", e.toString());
@@ -156,7 +160,7 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
 
 
 
-
+    //navigazione tramite bottom nav menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
@@ -180,12 +184,13 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
     }
 
 
-    public void LoadSymbols() {
+    public void LoadSymbols() { //carico i simboli delle valute 
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
                 OkHttpClient client = new OkHttpClient();
 
+                //creo richiesta http
                 Request request = new Request.Builder()
                         .url("https://api.freecurrencyapi.com/v1/currencies?apikey=ImLoHfOLkWEiYm3MnUhary5wlxaMZHSqQ7YKCZMD&currencies=")
                         // .addHeader("apikey", "YraibCBIybmjk59VIH2J05DJpkULhQ24")
@@ -202,14 +207,14 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
             }
 
             @Override
-            protected void onPostExecute(String result) {
+            protected void onPostExecute(String result) { //elaboro il json ricevuto se non è nullo per estrarre i simboli delle valute
                 if (result != null) {
                     Log.d("resultSym", result);
                     try {
                         JSONObject dataJson = new JSONObject(result);
                         JSONObject data = dataJson.getJSONObject("data");
 
-                        List<String> currencyList = new ArrayList<>();
+                        List<String> currencyList = new ArrayList<>(); //lista che conterrà le valute
 
                         Iterator<String> keys = data.keys();
                         while (keys.hasNext()) {
@@ -220,13 +225,14 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
                             Log.d("resultSym", currencySymbol);
                         }
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>( //creo un adapter per i due spinner che conterrà la lista di valute (currencyList)
                                 HistoryActivity.this,
                                 android.R.layout.simple_spinner_item,
                                 currencyList
                         );
-                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //definisco il tipo di spinner
 
+                        //associo i due spinner all'adapter creato contenente i simboli delle valute
                         StartCurrency.setAdapter(adapter);
                         EndCurrency.setAdapter(adapter);
 
