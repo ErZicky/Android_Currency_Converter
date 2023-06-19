@@ -2,8 +2,8 @@ package com.exam.mycurrency;
 
 public class SavedCurrencies {
 
-    private String SourceCur;
-    private String TargetCur;
+    private String SourceCur; //prima valuta
+    private String TargetCur; //seconda valuta
 
 
     public  SavedCurrencies(String cur1, String cur2)
