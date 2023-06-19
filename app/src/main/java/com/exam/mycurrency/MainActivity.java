@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 SavedList SymbolsHolder = SavedList.getInstance();
 
-                if(SymbolsHolder.getSymbolsSize() == 0)
+                if(SymbolsHolder.getSymbolsSize() == 0) //creo una lista di valute necessaria per quando viene aperta l'attività tramite preferiti
                 {
                     for (int k = 0; k < StartCurrency.getCount(); k++) {
                         String item = StartCurrency.getItemAtPosition(k).toString();
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                     }
                 }
                 
-                //codice per cambiare la bandiera il base alla valute 
+                //codice per cambiare la bandiera in base alla valute 
                 try {
                     int flagResourceId = getResources().getIdentifier((StartCurrency.getSelectedItem().toString()).toLowerCase(), "drawable", getPackageName()); //ottengo l'id della bandiera con il nome corrispondente alla valuta
                     Drawable image = getResources().getDrawable(flagResourceId);
