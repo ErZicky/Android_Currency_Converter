@@ -257,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    void SelectSpinnerExtra(String from, String to) //imposto gli spinner sulle valute della coppia preferita
+    void SelectSpinnerExtra(String from, String to) //ottengo gli indici per gli spinner corrispondenti alle valute preferite
     {
 
 
