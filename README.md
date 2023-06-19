@@ -18,10 +18,11 @@ Le due classi SavedCurrencies.java e SavedList.java definiscono rispettivamente 
 L'api utilizzata per ricavare valute e tassi di cambio è freecurrencyapi.com
 
 # ScreenShots
-Schermata principale dove effettuare le conversioni fra valute, cliccando la stella a destra è possibile salvare fra i preferiti una coppia di valute, in caso quella coppia di valute dovesse essere già presente verrà mostrato un toast
+Schermata principale dove effettuare le conversioni fra valute, cliccando la stella a destra è possibile salvare fra i preferiti una coppia di valute, in caso quella coppia di valute dovesse essere già presente verrà mostrato un toast:
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen1.jpeg)
 
 toast per coppia duplicata:
+
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen4.jpeg)
 
 Schermata dove è possibile vedere il tasso di cambio fra due valute negli ultimi 7 giorni:
