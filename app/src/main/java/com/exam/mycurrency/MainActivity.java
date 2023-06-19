@@ -39,7 +39,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView
         .OnNavigationItemSelectedListener {
 
-    //tassi di conversione presi da squareup
     EditText Inputcurrency;
     TextView OutputCurrency;
     List<String> keysList;
