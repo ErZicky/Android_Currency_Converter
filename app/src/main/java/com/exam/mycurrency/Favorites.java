@@ -21,17 +21,24 @@ public class Favorites extends AppCompatActivity implements BottomNavigationView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
+            
         BottomNavigationView bottomNavigationView;
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
         bottomNavigationView
                 .setOnNavigationItemSelectedListener((BottomNavigationView.OnNavigationItemSelectedListener) Favorites.this);
         bottomNavigationView.setSelectedItemId(R.id.favorite);
+
+        //inizializzo il layout del recyclerview    
         recyclerView = findViewById(R.id.recyclerView);
         LinearLayoutManager LM = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(LM);
+
+        //riempo il recycler con il contenuto di SavedList    
         SL = SavedList.getInstance();
         recyclerView.setAdapter(SL);
+
+        //aggiungo un divider fra le voci per essere visivamente più chiaro
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 LM.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
@@ -45,6 +52,7 @@ public class Favorites extends AppCompatActivity implements BottomNavigationView
 
 
 
+    //switch per la navigazione con il bottom nav menu
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
