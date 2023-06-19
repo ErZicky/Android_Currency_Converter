@@ -8,11 +8,11 @@ I file di layout xml sono presenti nel percorso [app/src/main/res/layout](app/sr
 Tutte le immagini custom sono presenti nel percorso [app/src/main/res/drawable](app/src/main/res/drawable)
 Ignorare la cartella (ScreensForReadMe)
 
-Le due SavedCurrencies.java e SavedList.java definiscono rispettivamente le singole coppie di valute salvabili e la lista di coppie di valute, SavedList estende RecyclerView.Adapter (e implementa i relativi metodi) per poter definire una "cella" personalizzata per recycleViews per poter mostrare le coppie di valute salvabili (l'xml per la cella è saved_currrencies_item.xml)
+Le due classi SavedCurrencies.java e SavedList.java definiscono rispettivamente le singole coppie di valute salvabili e la lista di coppie di valute salvate, SavedList estende RecyclerView.Adapter (e implementa i relativi metodi) per poter definire una "cella" personalizzata per recycleViews e poter mostrare le coppie di valute salvabili (l'xml per la cella è saved_currrencies_item.xml)
 
 
 - MainActivity è il controller per la vista activity_main.xml
-- HistoryActivity è il controller per la vista acitivy_history.xml
+- HistoryActivity è il controller per la vista activity_history.xml
 - Favorites è il controller per la vista favorites_activity.xml
 
 L'api utilizzata per ricavare valute e tassi di cambio è freecurrencyapi.com
