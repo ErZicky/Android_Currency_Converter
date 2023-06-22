@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
-    private static SavedList instance;
+public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> { //estendiamo RecyclerView per permettermi di definire il comportamento delle "celle" nella recycleView 
+    private static SavedList instance; //instanza del singleton
 
-    private static List<SavedCurrencies> curlist;
-    private static List<String> symbols;
+    private static List<SavedCurrencies> curlist; //la lista delle coppie di valute salvate
+    private static List<String> symbols; //lista di simboli necessaria per i preferiti
 
     private SavedList()
     {
@@ -24,7 +24,7 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
 
     }
 
-    public static synchronized SavedList getInstance()
+    public static synchronized SavedList getInstance() //ottengo istanza del singleton
     {
         if(instance == null)
         {
@@ -40,12 +40,12 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
     }
 
 
-    public List<SavedCurrencies> GetCurList() {
+    public List<SavedCurrencies> GetCurList() { //ottengo la lista di coppie di valute salvate 
         return curlist;
     }
 
 
-    public static SavedCurrencies GetSingleItem(int index)
+    public static SavedCurrencies GetSingleItem(int index) //ottengo una coppia sepicifica
     {
         return curlist.get(index);
     }
@@ -55,7 +55,7 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
         return curlist.size();
     }
 
-    public List<String> returnSymbols()
+    public List<String> returnSymbols() //ritono la lista di simboli
     {
         return symbols;
     }
@@ -65,7 +65,7 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
         return symbols.size();
     }
 
-    public int returnSymbolPosition(String t)
+    public int returnSymbolPosition(String t) //ottengo la posizione di una valuta nell'elenco di valute (utilizzato per capire che elemento gli spinner devono selezionare quando si vuole caricare una coppia salvata)
     {
         return symbols.indexOf(t);
     }
@@ -73,7 +73,7 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
     {
         symbols.add(f);
     }
-    public boolean FindDuplicate(SavedCurrencies couple)
+    public boolean FindDuplicate(SavedCurrencies couple) //ritorno true se la coppia di valute passata è già presente nella lista curlist in modo da evitare di salvare la stessa coppia più volte
     {
         for(int i = 0; i<curlist.size(); i++)
         {
@@ -87,8 +87,8 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
         return false;
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener { //da qui in poi viene definito come si comporta la singola cella del RecycleView nell'attività Favorites
+        //il layout della cella è mostrato nel file saved_currrencies_item.xml in /res/layout
         TextView fromcurText;
         TextView tocurText;
         public MyViewHolder(View itemView) {
@@ -99,11 +99,11 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
         }
 
         @Override
-        public void onClick(View view) {
+        public void onClick(View view) { //cosa fare quando la cella viene cliccata
             int position = getAdapterPosition();
-            SavedCurrencies selectedItem = curlist.get(position);
+            SavedCurrencies selectedItem = curlist.get(position); //ottengo la posizione di questa coppia nella lista di coppie salvate
 
-            // Open MainActivity and pass the selected item
+            // apro main activity passando come informazione extra una stringa contentente le due valute separate da '/' (valuta1/valuta2)
             Intent intent = new Intent(view.getContext(), MainActivity.class);
             intent.putExtra("selectedItem", (selectedItem.GetSource().toString() + "/" +selectedItem.getTargetCur().toString()));
             view.getContext().startActivity(intent);
@@ -111,14 +111,14 @@ public class SavedList extends RecyclerView.Adapter<SavedList.MyViewHolder> {
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //popola la RecycleView con celle di questo tipo 
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.saved_currrencies_item, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, int position) { //quando la cella è stata creata e associata al RecycleView ottieni la Coppia di valute corrispondente alla posizione della cella e scrivi le due valute nelle due TextView
         SavedCurrencies item = SavedList.GetSingleItem(position);
         holder.fromcurText.setText(item.GetSource().toString());
         holder.tocurText.setText(item.getTargetCur().toString());

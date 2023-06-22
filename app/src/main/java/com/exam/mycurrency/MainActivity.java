@@ -39,7 +39,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 public class MainActivity extends AppCompatActivity implements BottomNavigationView
         .OnNavigationItemSelectedListener {
 
-    //tassi di conversione presi da squareup
     EditText Inputcurrency;
     TextView OutputCurrency;
     List<String> keysList;
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         FavoriteIcon = (ImageView) findViewById(R.id.SetFavorite);
 
 
-        LoadSymbols();
+        LoadSymbols(); //carico le tre lettere delle valute
 
 
         Inputcurrency.addTextChangedListener(new TextWatcher() {
@@ -95,9 +94,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
             @Override
-            public void afterTextChanged(Editable editable) {
+            public void afterTextChanged(Editable editable) { //quando il testo viene modificato effettuo automaticamente il cambio
                 if(Inputcurrency.getText().length() != 0)
-                    loadConRate(Inputcurrency.getText().toString());
+                    loadConRate(Inputcurrency.getText().toString()); //effetuo il cambio
             }
         });
 
@@ -107,17 +106,17 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                 SavedList SymbolsHolder = SavedList.getInstance();
 
-                if(SymbolsHolder.getSymbolsSize() == 0)
+                if(SymbolsHolder.getSymbolsSize() == 0) //creo una lista di valute necessaria per quando viene aperta l'attività tramite preferiti
                 {
                     for (int k = 0; k < StartCurrency.getCount(); k++) {
                         String item = StartCurrency.getItemAtPosition(k).toString();
                         SymbolsHolder.AddSymbols(item);
                     }
                 }
-
-
+                
+                //codice per cambiare la bandiera in base alla valute 
                 try {
-                    int flagResourceId = getResources().getIdentifier((StartCurrency.getSelectedItem().toString()).toLowerCase(), "drawable", getPackageName());
+                    int flagResourceId = getResources().getIdentifier((StartCurrency.getSelectedItem().toString()).toLowerCase(), "drawable", getPackageName()); //ottengo l'id della bandiera con il nome corrispondente alla valuta
                     Drawable image = getResources().getDrawable(flagResourceId);
                     FlagStart.setImageDrawable(image);
                 }
@@ -140,8 +139,9 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         EndCurrency.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                     //codice per cambiare la bandiera il base alla valute 
                 try {
-                    int flagResourceId = getResources().getIdentifier((EndCurrency.getSelectedItem().toString()).toLowerCase(), "drawable", getPackageName());
+                    int flagResourceId = getResources().getIdentifier((EndCurrency.getSelectedItem().toString()).toLowerCase(), "drawable", getPackageName()); //ottengo l'id della bandiera con il nome corrispondente alla valuta
                     Drawable image = getResources().getDrawable(flagResourceId);
                     FlagEnd.setImageDrawable(image);
 
@@ -165,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
 
 
-        FavoriteIcon.setOnClickListener(new View.OnClickListener() {
+        FavoriteIcon.setOnClickListener(new View.OnClickListener() { //click sulla stella
             @Override
             public void onClick(View v)
             {
@@ -176,14 +176,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                     SavedList favoritesholder = SavedList.getInstance();
 
-                    if(!favoritesholder.FindDuplicate(t))
+                    if(!favoritesholder.FindDuplicate(t)) //se la coppia di valute non è gia stata salvata la salvo
                     {
                         favoritesholder.addToDataList(t);
                         FavoriteIcon.setImageResource(R.drawable.star_full);
 
 
                     }
-                    else
+                    else //altrimenti mostro un toast per informare che esiste già
                     {
                         CharSequence text = "Coppia di valute già presente";
                         int duration = Toast.LENGTH_SHORT;
@@ -205,21 +205,24 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
         });
 
+        //controllo se questa attività è stata avviata con infomrazioni extra (usate per quando si clicca su una coppia nei preferiti) in modo da caricare la coppia
         Intent intent = getIntent();
         String Sitem = intent.getStringExtra("selectedItem");
         if(Sitem != "" && Sitem!=null)
         {
+            //ottengo le due valute preferite
             String[] elements = Sitem.split("/");
             String firstString = elements[0];
             String secondString = elements[1];
 
-            SelectSpinnerExtra(firstString, secondString);
+            SelectSpinnerExtra(firstString, secondString); //carico le valute 
         }
 
 
     }
 
 
+        //navigazione tramite bottom nav
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -246,7 +249,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    void SelectSpinnerExtra(String from, String to)
+    void SelectSpinnerExtra(String from, String to) //ottengo gli indici per gli spinner corrispondenti alle valute preferite
     {
 
 
@@ -254,6 +257,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         SavedList SymbolsHolder = SavedList.getInstance();
 
         int indexS = SymbolsHolder.returnSymbolPosition(from);
+        //creo gli index di selezione che userò quando verranno caricati i simboli per selezionare le valute preferite
         if (indexS != -1) {
            // StartCurrency.setSelection(indexS);
             selectionS=indexS;
@@ -267,12 +271,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    public void loadConRate(String amountEdited) {
+    public void loadConRate(String amountEdited) { //effettuo la conversioni fra valute
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
+                //preparo la richiesta all'api
                 OkHttpClient client = new OkHttpClient();
-
+                
                 Request request = new Request.Builder()
                         .url("https://api.freecurrencyapi.com/v1/latest?apikey=ImLoHfOLkWEiYm3MnUhary5wlxaMZHSqQ7YKCZMD&currencies="+EndCurrency.getSelectedItem()+"&base_currency="+StartCurrency.getSelectedItem())
              //          .addHeader("apikey", "YraibCBIybmjk59VIH2J05DJpkULhQ24")
@@ -289,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
             @Override
-            protected void onPostExecute(String result) {
+            protected void onPostExecute(String result) { //se il risultato non è nullo elaboro il json
                 if (result != null)
                 {
                     Log.d("result", result);
@@ -299,15 +304,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
                     String currencyCode = dataObject.keySet().iterator().next();
 
-                    // Ottieni il valore numerico della valuta
+                    // Ottiengo il rateo di cambio
                     double currencyValue = dataObject.get(currencyCode).getAsDouble();
 
-                    // Moltiplica il valore per 15
+                    // Moltiplico il rateo per la quantità immessa
                     double multipliedValue = currencyValue * Double.parseDouble(Inputcurrency.getText().toString());
 
-                    // Formatta il risultato a due cifre decimali
+                    // Formatto il risultato a due cifre decimali
                     String formattedResult = String.format("%.2f", multipliedValue);
 
+                    //mostro il risultato nella textview
                     OutputCurrency.setText(formattedResult);
                 }
             }
@@ -315,10 +321,11 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     }
 
 
-    public void LoadSymbols() {
+    public void LoadSymbols() { //carico i simboli delle valute 
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... voids) {
+                //preparo richiesta all'api
                 OkHttpClient client = new OkHttpClient();
 
                 Request request = new Request.Builder()
@@ -337,14 +344,14 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             }
 
                 @Override
-                protected void onPostExecute(String result) {
+                protected void onPostExecute(String result) { //se il risultato non è nullo elaboro il JSON
                     if (result != null) {
                         Log.d("resultSym", result);
                         try {
                             JSONObject dataJson = new JSONObject(result);
                             JSONObject data = dataJson.getJSONObject("data");
 
-                            List<String> currencyList = new ArrayList<>();
+                            List<String> currencyList = new ArrayList<>(); //lista che conterrà le valute
 
                             Iterator<String> keys = data.keys();
                             while (keys.hasNext()) {
@@ -357,16 +364,20 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                                 Log.d("resultSym", currencySymbol);
                             }
 
-                            ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                            ArrayAdapter<String> adapter = new ArrayAdapter<>( //creo un adapter per i due spinner che conterrà la lista di valute (currencyList)
                                     MainActivity.this,
                                     android.R.layout.simple_spinner_item,
                                     currencyList
                             );
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); //definisco il tipo di spinner
 
+                             //associo i due spinner all'adapter creato contenente i simboli delle valute
                             StartCurrency.setAdapter(adapter);
                             EndCurrency.setAdapter(adapter);
 
+
+                            //se selectionE e selectionS non sono -1 vuol dire che questa attività è stata aperta con Extra e quindi è
+                            //necessario selezionare delle valute preferite quindi imposto i due spinner agli index delle valute della coppia preferita
                             if(selectionE != -1  && selectionS != -1)
                             {
                                 StartCurrency.setSelection(selectionS);
