@@ -168,10 +168,12 @@ public class HistoryActivity extends AppCompatActivity implements BottomNavigati
             case R.id.home:
                     Intent home = new Intent(HistoryActivity.this, MainActivity.class);
                     startActivity(home);
+                    finish(); //chiudo questa attività
                     return true;
           case R.id.favorite:
               Intent fav = new Intent(HistoryActivity.this, Favorites.class);
               HistoryActivity.this.startActivity(fav);
+              finish(); //chiudo questa attività
 
 
               return true;

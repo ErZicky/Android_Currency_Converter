@@ -226,26 +226,18 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
             case R.id.history:
                 Intent historyIntent = new Intent(MainActivity.this, HistoryActivity.class);
                 startActivity(historyIntent);
+                finish(); //chiudo questa attività
                 return true;
 
 
             case R.id.home:
 
-                if(this instanceof MainActivity)
-                {
-
-                }
-                else
-                {
-                    Intent home = new Intent(MainActivity.this, MainActivity.class);
-                    MainActivity.this.startActivity(home);
-                    return true;
-                }
                 return true;
 
             case R.id.favorite:
                 Intent fav = new Intent(MainActivity.this, Favorites.class);
                 MainActivity.this.startActivity(fav);
+                finish(); //chiudo questa attività
                 return true;
 
 

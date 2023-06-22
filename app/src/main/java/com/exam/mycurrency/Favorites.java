@@ -56,6 +56,7 @@ public class Favorites extends AppCompatActivity implements BottomNavigationView
                         .commit();*/
                 Intent historyIntent = new Intent(Favorites.this, HistoryActivity.class);
                 startActivity(historyIntent);
+                finish(); //chiudo questa attività
                 return true;
 
 
@@ -63,6 +64,7 @@ public class Favorites extends AppCompatActivity implements BottomNavigationView
 
                     Intent home = new Intent(Favorites.this, MainActivity.class);
                     Favorites.this.startActivity(home);
+                    finish(); //chiudo questa attività
                     return true;
 
             case R.id.favorite:
