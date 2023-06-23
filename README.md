@@ -1,4 +1,4 @@
-#Daniele Ziaco (Matricola 317310)
+# Daniele Ziaco (Matricola 317310)
 
 # Daniele_Ziaco_Android_Currency_Converter
 Un app per convertire valute fatta in android studio per l'esame di programmazione di sistemi mobili
