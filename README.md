@@ -1,38 +1,36 @@
-# Daniele Ziaco (Matricola 317310)
+# Android_Currency_Converter
+A simple app made with Android Studio and Java for the mobile programming exam, where you can convert between currencies and save them for quicker selection
 
-# Daniele_Ziaco_Android_Currency_Converter
-Un app per convertire valute fatta in android studio per l'esame di programmazione di sistemi mobili
+# Structure
 
-# Struttura
+the .java files are at this path: [app/src/main/java/com/exam/mycurrency](app/src/main/java/com/exam/mycurrency)
+The xml files are at: [app/src/main/res/layout](app/src/main/res/layout)
+All the custom images are at: [app/src/main/res/drawable](app/src/main/res/drawable)
+Ignore the "ScreensForReadMe" folder
 
-I file .java sono presenti nel percorso [app/src/main/java/com/exam/mycurrency](app/src/main/java/com/exam/mycurrency)
-I file di layout xml sono presenti nel percorso [app/src/main/res/layout](app/src/main/res/layout)
-Tutte le immagini custom sono presenti nel percorso [app/src/main/res/drawable](app/src/main/res/drawable)
-Ignorare la cartella (ScreensForReadMe)
-
-Le due classi SavedCurrencies.java e SavedList.java definiscono rispettivamente le singole coppie di valute salvabili e la lista di coppie di valute salvate, SavedList estende RecyclerView.Adapter (e implementa i relativi metodi) per poter definire una "cella" personalizzata per recycleViews e poter mostrare le coppie di valute salvabili (l'xml per la cella è saved_currrencies_item.xml)
+The two classes SavedCurrencies.java and SavedList.java respectively define the single saveable currency pairs and the list of saved currency pairs, SavedList extends RecyclerView.Adapter (and implements the related methods) to be able to define a custom "cell" for recycleViews and be able to show the currency pairs that can be saved (the xml for the cell is saved_currrencies_item.xml)
 
 
-- MainActivity è il controller per la vista activity_main.xml
-- HistoryActivity è il controller per la vista activity_history.xml
-- Favorites è il controller per la vista favorites_activity.xml
+- MainActivity is the controller for the activity_main.xml view
+- HistoryActivity is the controller for the activity_history.xml view
+- Favorites is the controller for the favorites_activity.xml view
 
-L'api utilizzata per ricavare valute e tassi di cambio è freecurrencyapi.com
+The api used to get currencies and exchange rates is freecurrencyapi.com
 
 # ScreenShots
-Schermata principale dove effettuare le conversioni fra valute, cliccando la stella a destra è possibile salvare fra i preferiti una coppia di valute, in caso quella coppia di valute dovesse essere già presente verrà mostrato un toast:
+Main screen where to make conversions between currencies, by clicking on the star on the right it is possible to save a currency pair among your favourites, if that currency pair is already present a toast will be shown:
 
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen1.jpeg)
 
-toast per coppia duplicata:
+toast for duplicate pair:
 
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen4.jpeg)
 
-Schermata dove è possibile vedere il tasso di cambio fra due valute negli ultimi 7 giorni:
+Screen where you can see the exchange rate between two currencies in the last 7 days:
 
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen2.jpeg)
 
-Schermata dove è possibile visualizzare le coppie di valute salvate fra i preferiti, cliccando su una di esse si verrà riportati alla schermata principale e verranno pre selezionate le due valute in questione:
+Screen where it is possible to view the currency pairs saved in your favourites, by clicking on one of them you will be taken back to the main screen and the two currencies in question will be pre-selected:
 
 ![](https://github.com/ErZicky/Daniele_Ziaco_Android_Currency_Converter/blob/master/ScreensForReadMe/screen3.jpeg)
 
